@@ -36,5 +36,6 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
-          STOCK_CODES: ${{ secrets.STOCK_CODES }}
+          STOCK_LIST: ${{ secrets.STOCK_LIST }}
+          REPORT_TYPE: ${{ secrets.REPORT_TYPE }}
         run: python main.py
