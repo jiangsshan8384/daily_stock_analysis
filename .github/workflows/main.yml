@@ -37,4 +37,4 @@ jobs:
           OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
           TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
           STOCK_CODES: ${{ secrets.STOCK_CODES }}
-        run: python main.py --no-notify
+        run: python main.py
