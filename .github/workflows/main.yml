@@ -1,0 +1,40 @@
+name: 每日股票分析
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '运行模式'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - market-only
+          - stocks-only
+  schedule:
+    - cron: '30 1 * * 1-5'   # 工作日 9:30 (UTC+8)
+    - cron: '30 7 * * 1-5'   # 工作日 15:30 (UTC+8)
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 运行分析
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
+          STOCK_CODES: ${{ secrets.STOCK_CODES }}
+        run: python main.py --no-notify
